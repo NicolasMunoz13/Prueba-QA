@@ -1,0 +1,174 @@
+{
+	"info": {
+		"_postman_id": "69817c9d-8709-4e85-bb9e-c4cf743d0b4f",
+		"name": "APIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17398948",
+		"_collection_link": "https://www.postman.com/speeding-eclipse-332616/workspace/bancolombia-test/collection/17398948-69817c9d-8709-4e85-bb9e-c4cf743d0b4f?action=share&source=collection_link&creator=17398948"
+	},
+	"item": [
+		{
+			"name": "GET",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test: Validate JSON Response\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");\r",
+							"    \r",
+							"    try {\r",
+							"        pm.response.json();\r",
+							"    } catch (e) {\r",
+							"        pm.expect.fail(\"Response is not in JSON format\");\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate Page is 2\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var page = jsonData.page;\r",
+							"    pm.expect(page).to.eql(Number(pm.collectionVariables.get(\"expectedPage\")));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate total is 12\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var page = jsonData.page;\r",
+							"    pm.expect(page).to.eql(Number(pm.collectionVariables.get(\"expectedPage\")));\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://reqres.in/api/users?page=2",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test: Validate JSON Response\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");\r",
+							"    \r",
+							"    try {\r",
+							"        pm.response.json();\r",
+							"    } catch (e) {\r",
+							"        pm.expect.fail(\"Response is not in JSON format\");\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate Name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var name = jsonData.nombre;\r",
+							"    pm.expect(name).to.eql((pm.collectionVariables.get(\"name\")));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate Job\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var job = jsonData.trabajo;\r",
+							"    pm.expect(job).to.eql((pm.collectionVariables.get(\"job\")));\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"{{name}}\",\r\n    \"trabajo\": \"{{job}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://reqres.in/api/users",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "expectedPage",
+			"value": "2",
+			"type": "string"
+		},
+		{
+			"key": "name",
+			"value": "prueba",
+			"type": "string"
+		},
+		{
+			"key": "job",
+			"value": "automation",
+			"type": "string"
+		}
+	]
+}
